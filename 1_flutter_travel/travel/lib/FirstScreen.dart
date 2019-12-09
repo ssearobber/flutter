@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'sign_in.dart';
+import 'EnrollmentScreen.dart';
 
 class FirstScreen extends StatelessWidget {
   @override
@@ -25,7 +26,7 @@ class FirstScreen extends StatelessWidget {
             height: 50,
             child: Center(
               child: Column(
-                children: <Widget>[_enrollmentButton()],
+                children: <Widget>[_enrollmentButton(context)],
               ),
             ),
           ),
@@ -50,10 +51,18 @@ class FirstScreen extends StatelessWidget {
     ));
   }
 
-  Widget _enrollmentButton() {
+  Widget _enrollmentButton(BuildContext context) {
     return OutlineButton(
       splashColor: Colors.blue,
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return EnrollmentScreen();
+            },
+          ),
+        );
+      },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,
       borderSide: BorderSide(color: Colors.blue),
@@ -63,8 +72,9 @@ class FirstScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            new Icon(Icons.assessment, color: Colors.blue),
             Text(
-              'Enrollment',
+              ' Enrollment',
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.blue,
@@ -89,8 +99,9 @@ class FirstScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            new Icon(Icons.search, color: Colors.blue),
             Text(
-              'Search',
+              ' Search',
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.blue,
