@@ -14,6 +14,15 @@ class _ProfileData {
 
 class _EnrollmentScreenState extends State<EnrollmentScreen> {
   final GlobalKey _formKey = GlobalKey();
+
+  int selectedRadio = 0;
+
+  setSelectedRadio(int val) {
+    setState(() {
+      selectedRadio = val;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,14 +43,24 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   new Radio(
-                    value: 0,
+                    value: 1,
+                    groupValue: selectedRadio,
+                    activeColor: Colors.blue,
+                    onChanged: (val) {
+                      setSelectedRadio(val);
+                    },
                   ),
                   new Text('male'),
                   new Padding(
                     padding: EdgeInsets.all(8.0),
                   ),
                   new Radio(
-                    value: 1,
+                    value: 2,
+                    groupValue: selectedRadio,
+                    activeColor: Colors.blue,
+                    onChanged: (val) {
+                      setSelectedRadio(val);
+                    },
                   ),
                   new Text('female')
                 ],
