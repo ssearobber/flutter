@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class EnrollmentScreen extends StatefulWidget {
   @override
@@ -15,7 +17,19 @@ class _ProfileData {
 class _EnrollmentScreenState extends State<EnrollmentScreen> {
   final GlobalKey _formKey = GlobalKey();
 
+  File _image;
+
   int selectedRadio = 0;
+
+  // This funcion will helps you to pick and Image from Gallery
+  _pickImageFromGallery() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50);
+
+    setState(() {
+      _image = image;
+    });
+  }
 
   setSelectedRadio(int val) {
     setState(() {
@@ -70,6 +84,22 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                 decoration: InputDecoration(
                     labelText: 'description', border: OutlineInputBorder()),
                 maxLength: 60,
+              ),
+              if (_image != null)
+                Image.file(_image)
+              else
+                Text(
+                  "Click on Pick Image to select an Image",
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              RaisedButton(
+                onPressed: () {
+                  _pickImageFromGallery();
+                  // or
+                  // _pickImageFromCamera();
+                  // use the variables accordingly
+                },
+                child: Text("Pick Image From Gallery"),
               ),
             ],
           ),
