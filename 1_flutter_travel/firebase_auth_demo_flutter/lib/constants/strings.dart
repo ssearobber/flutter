@@ -69,5 +69,5 @@ class Strings {
   static const String mock = 'Mock';
 
   // travel project
-  static const String travelMenu = 'Travel menu';
+  static const String travelIsFriend = 'Travel is friend';
 }
