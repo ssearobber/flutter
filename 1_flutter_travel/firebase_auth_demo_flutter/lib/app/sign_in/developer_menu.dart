@@ -16,7 +16,7 @@ class DeveloperMenu extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: const <Widget>[
                 Text(
-                  Strings.developerMenu,
+                  Strings.travelMenu,
                   style: TextStyle(
                     fontSize: 22.0,
                     color: Colors.white,
@@ -28,6 +28,7 @@ class DeveloperMenu extends StatelessWidget {
               color: Colors.indigo,
             ),
           ),
+          _enrollment(context),
           _buildOptions(context),
         ]),
       ),
@@ -39,6 +40,17 @@ class DeveloperMenu extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           AuthServiceTypeSelector(),
+        ],
+      ),
+    );
+  }
+
+  Widget _enrollment(BuildContext context) {
+    return Center(
+      child: Column(
+        children: <Widget>[
+          Text('enrollment'),
+          ButtonBar(),
         ],
       ),
     );

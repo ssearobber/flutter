@@ -29,7 +29,7 @@ class SignInPageBuilder extends StatelessWidget {
             builder: (_, SignInManager manager, __) => SignInPage._(
               isLoading: isLoading.value,
               manager: manager,
-              title: 'Firebase Auth Demo',
+              title: '', //Firebase Auth Demo
             ),
           ),
         ),
@@ -107,12 +107,20 @@ class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 2.0,
-        title: Text(title),
+        backgroundColor: Colors.grey[200],
+        elevation: 0.0,
+        title: Text(
+          title,
+          style: TextStyle(
+            color: Colors.blue,
+          ),
+        ),
+        iconTheme:
+            IconThemeData(color: Colors.indigo), //this is colro of drawerIcon
       ),
       // Hide developer menu while loading in progress.
       // This is so that it's not possible to switch auth service while a request is in progress
-      drawer: isLoading ? null : DeveloperMenu(),
+      // drawer: isLoading ? null : DeveloperMenu(),
       backgroundColor: Colors.grey[200],
       body: _buildSignIn(context),
     );
@@ -124,11 +132,12 @@ class SignInPage extends StatelessWidget {
         child: CircularProgressIndicator(),
       );
     }
-    return Text(
-      Strings.signIn,
-      textAlign: TextAlign.center,
-      style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w600),
-    );
+    //this is signIn of text
+    // return Text(
+    //   Strings.signIn,
+    //   textAlign: TextAlign.center,
+    //   style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w600),
+    // );
   }
 
   Widget _buildSignIn(BuildContext context) {

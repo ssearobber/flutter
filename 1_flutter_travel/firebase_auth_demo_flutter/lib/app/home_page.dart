@@ -10,7 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
+import 'package:firebase_auth_demo_flutter/app/sign_in/developer_menu.dart';
+
 class HomePage extends StatelessWidget {
+  bool isLoading = false;
+
   Future<void> _signOut(BuildContext context) async {
     try {
       final AuthService auth = Provider.of<AuthService>(context);
@@ -40,7 +44,9 @@ class HomePage extends StatelessWidget {
     final user = Provider.of<User>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(Strings.homePage),
+        // title: Text(Strings.homePage),
+        backgroundColor: Colors.grey[200],
+        elevation: 0.0,
         actions: <Widget>[
           FlatButton(
             key: Key(Keys.logout),
@@ -48,37 +54,41 @@ class HomePage extends StatelessWidget {
               Strings.logout,
               style: TextStyle(
                 fontSize: 18.0,
-                color: Colors.white,
+                color: Colors.indigo,
               ),
             ),
             onPressed: () => _confirmSignOut(context),
           ),
         ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(130.0),
-          child: _buildUserInfo(user),
-        ),
+        //this is appeared photoUrl
+        // bottom: PreferredSize(
+        //   preferredSize: Size.fromHeight(130.0),
+        //   child: _buildUserInfo(user),
+        // ),
+        iconTheme: IconThemeData(color: Colors.indigo),
       ),
+      backgroundColor: Colors.grey[200],
+      drawer: isLoading ? null : DeveloperMenu(),
     );
   }
-
-  Widget _buildUserInfo(User user) {
-    return Column(
-      children: [
-        Avatar(
-          photoUrl: user.photoUrl,
-          radius: 50,
-          borderColor: Colors.black54,
-          borderWidth: 2.0,
-        ),
-        SizedBox(height: 8),
-        if (user.displayName != null)
-          Text(
-            user.displayName,
-            style: TextStyle(color: Colors.white),
-          ),
-        SizedBox(height: 8),
-      ],
-    );
-  }
+  //this is appeared photoUrl of widget
+  // Widget _buildUserInfo(User user) {
+  //   return Column(
+  //     children: [
+  //       Avatar(
+  //         photoUrl: user.photoUrl,
+  //         radius: 50,
+  //         borderColor: Colors.black54,
+  //         borderWidth: 2.0,
+  //       ),
+  //       SizedBox(height: 8),
+  //       if (user.displayName != null)
+  //         Text(
+  //           user.displayName,
+  //           style: TextStyle(color: Colors.white),
+  //         ),
+  //       SizedBox(height: 8),
+  //     ],
+  //   );
+  // }
 }
