@@ -17,17 +17,27 @@ class EnrollmentScreen extends StatefulWidget {
   }
 }
 
-class _ProfileData {
-  String name = "";
-  String description = "";
-}
-
 class _EnrollmentScreenState extends State<EnrollmentScreen> {
   final GlobalKey _formKey = GlobalKey();
 
   File _image;
 
   int selectedRadio = 0;
+
+  List<Object> images = List<Object>();
+  Future<File> _imageFile;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      images.add("Add Image");
+      images.add("Add Image");
+      images.add("Add Image");
+      images.add("Add Image");
+    });
+  }
 
   Future<void> _signOut(BuildContext context) async {
     try {
@@ -60,16 +70,6 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
       _image = image;
     });
   }
-
-  // This funcion will helps you to pick and Image from Gallery
-  // _pickImageFromGallery() async {
-  //   File image = await ImagePicker.pickImage(
-  //       source: ImageSource.gallery, imageQuality: 50);
-
-  //   setState(() {
-  //     _image = image;
-  //   });
-  // }
 
   void setSelectedRadio(int val) {
     setState(() {
@@ -157,20 +157,97 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                   "Click on Pick Image to select an Image",
                   style: TextStyle(fontSize: 18.0),
                 ),
-              RaisedButton(
-                onPressed: () {
-                  getImage();
-                  // _pickImageFromGallery();
-                  // or
-                  // _pickImageFromCamera();
-                  // use the variables accordingly
-                },
-                child: Text("Pick Image From Gallery"),
-              ),
+              buildGridView()
             ],
           ),
         ),
       ),
     );
   }
+
+  Widget buildGridView() {
+    return GridView.count(
+      shrinkWrap: true,
+      crossAxisCount: 3,
+      childAspectRatio: 1,
+      children: List.generate(images.length, (index) {
+        if (images[index] is ImageUploadModel) {
+          ImageUploadModel uploadModel = images[index];
+          return Card(
+            clipBehavior: Clip.antiAlias,
+            child: Stack(
+              children: <Widget>[
+                Image.file(
+                  uploadModel.imageFile,
+                  width: 300,
+                  height: 300,
+                ),
+                Positioned(
+                  right: 5,
+                  top: 5,
+                  child: InkWell(
+                    child: Icon(
+                      Icons.remove_circle,
+                      size: 20,
+                      color: Colors.red,
+                    ),
+                    onTap: () {
+                      setState(() {
+                        images.replaceRange(index, index + 1, ['Add Image']);
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        } else {
+          return Card(
+            child: IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                _onAddImageClick(index);
+              },
+            ),
+          );
+        }
+      }),
+    );
+  }
+
+  Future _onAddImageClick(int index) async {
+    setState(() {
+      _imageFile = ImagePicker.pickImage(source: ImageSource.gallery);
+      getFileImage(index);
+    });
+  }
+
+  void getFileImage(int index) async {
+//    var dir = await path_provider.getTemporaryDirectory();
+
+    _imageFile.then((file) async {
+      setState(() {
+        ImageUploadModel imageUpload = new ImageUploadModel();
+        imageUpload.isUploaded = false;
+        imageUpload.uploading = false;
+        imageUpload.imageFile = file;
+        imageUpload.imageUrl = '';
+        images.replaceRange(index, index + 1, [imageUpload]);
+      });
+    });
+  }
+}
+
+class ImageUploadModel {
+  bool isUploaded;
+  bool uploading;
+  File imageFile;
+  String imageUrl;
+
+  ImageUploadModel({
+    this.isUploaded,
+    this.uploading,
+    this.imageFile,
+    this.imageUrl,
+  });
 }
