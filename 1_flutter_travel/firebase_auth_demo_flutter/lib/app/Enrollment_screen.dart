@@ -39,6 +39,12 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
     });
   }
 
+  void setSelectedRadio(int val) {
+    setState(() {
+      selectedRadio = val;
+    });
+  }
+
   Future<void> _signOut(BuildContext context) async {
     try {
       final AuthService auth = Provider.of<AuthService>(context);
@@ -63,17 +69,25 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
     }
   }
 
-  Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
+  Future _onAddImageClick(int index) async {
     setState(() {
-      _image = image;
+      _imageFile = ImagePicker.pickImage(source: ImageSource.gallery);
+      getFileImage(index);
     });
   }
 
-  void setSelectedRadio(int val) {
-    setState(() {
-      selectedRadio = val;
+  void getFileImage(int index) async {
+//    var dir = await path_provider.getTemporaryDirectory();
+
+    _imageFile.then((file) async {
+      setState(() {
+        ImageUploadModel imageUpload = new ImageUploadModel();
+        imageUpload.isUploaded = false;
+        imageUpload.uploading = false;
+        imageUpload.imageFile = file;
+        imageUpload.imageUrl = '';
+        images.replaceRange(index, index + 1, [imageUpload]);
+      });
     });
   }
 
@@ -157,7 +171,12 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                   "Click on Pick Image to select an Image",
                   style: TextStyle(fontSize: 18.0),
                 ),
-              buildGridView()
+              buildGridView(),
+              SizedBox(height: 30.0),
+              RaisedButton(
+                color: Colors.indigo,
+                // otherwise.
+              )
             ],
           ),
         ),
@@ -213,28 +232,6 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
         }
       }),
     );
-  }
-
-  Future _onAddImageClick(int index) async {
-    setState(() {
-      _imageFile = ImagePicker.pickImage(source: ImageSource.gallery);
-      getFileImage(index);
-    });
-  }
-
-  void getFileImage(int index) async {
-//    var dir = await path_provider.getTemporaryDirectory();
-
-    _imageFile.then((file) async {
-      setState(() {
-        ImageUploadModel imageUpload = new ImageUploadModel();
-        imageUpload.isUploaded = false;
-        imageUpload.uploading = false;
-        imageUpload.imageFile = file;
-        imageUpload.imageUrl = '';
-        images.replaceRange(index, index + 1, [imageUpload]);
-      });
-    });
   }
 }
 
