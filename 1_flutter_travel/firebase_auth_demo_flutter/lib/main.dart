@@ -8,8 +8,12 @@ import 'package:firebase_auth_demo_flutter/services/email_secure_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth_demo_flutter/Locator.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  setupLocator();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // [initialAuthServiceType] is made configurable for testing
