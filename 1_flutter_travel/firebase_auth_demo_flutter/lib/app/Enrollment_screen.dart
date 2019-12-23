@@ -10,6 +10,9 @@ import 'package:firebase_auth_demo_flutter/services/auth_service.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
+import 'package:firebase_auth_demo_flutter/model/CRUDModel.dart';
+import 'package:firebase_auth_demo_flutter/model/EnrollmentDto.dart';
+
 class EnrollmentScreen extends StatefulWidget {
   @override
   _EnrollmentScreenState createState() {
@@ -18,11 +21,12 @@ class EnrollmentScreen extends StatefulWidget {
 }
 
 class _EnrollmentScreenState extends State<EnrollmentScreen> {
-  final GlobalKey _formKey = GlobalKey();
+  final GlobalKey _formKey = GlobalKey<FormState>();
 
   File _image;
-
+  String name = '';
   int selectedRadio = 0;
+  String introduce = '';
 
   List<Object> images = List<Object>();
   Future<File> _imageFile;
@@ -93,6 +97,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final CRUDModel enrollmentProvider = Provider.of<CRUDModel>(context);
     return Scaffold(
       appBar: AppBar(
         // title: Text(Strings.homePage),
@@ -122,14 +127,21 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Form(
-          key: this._formKey,
+          key: _formKey,
           child: ListView(
             children: <Widget>[
               TextFormField(
-                  decoration: InputDecoration(
-                      labelText: 'name', border: OutlineInputBorder()),
-                  maxLength: 12,
-                  maxLengthEnforced: true),
+                decoration: InputDecoration(
+                    labelText: 'name', border: OutlineInputBorder()),
+                maxLength: 12,
+                maxLengthEnforced: true,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter Enrollment Name';
+                  }
+                },
+                onSaved: (value) => name = value,
+              ),
               SizedBox(height: 13.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -159,10 +171,10 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
               ),
               SizedBox(height: 30.0),
               TextFormField(
-                decoration: InputDecoration(
-                    labelText: 'description', border: OutlineInputBorder()),
-                maxLength: 60,
-              ),
+                  decoration: InputDecoration(
+                      labelText: 'description', border: OutlineInputBorder()),
+                  maxLength: 60,
+                  onSaved: (value) => introduce = value),
               SizedBox(height: 30.0),
               if (_image != null)
                 Image.file(_image)
@@ -174,6 +186,17 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
               buildGridView(),
               SizedBox(height: 30.0),
               RaisedButton(
+                splashColor: Colors.indigo,
+                onPressed: () async {
+                  // if (_formKey.currentState.validate()) {
+                  // _formKey.currentState.save();
+                  await enrollmentProvider.addEnrollmentDto(EnrollmentDto(
+                      name: name, sex: '1', introduce: introduce));
+                  Navigator.pop(context);
+                  // }
+                },
+                child: Text('add information',
+                    style: TextStyle(color: Colors.white)),
                 color: Colors.indigo,
                 // otherwise.
               )

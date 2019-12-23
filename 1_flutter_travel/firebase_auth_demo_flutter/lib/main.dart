@@ -10,6 +10,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth_demo_flutter/Locator.dart';
 
+import 'package:firebase_auth_demo_flutter/model/CRUDModel.dart';
+
 void main() {
   setupLocator();
   runApp(MyApp());
@@ -44,6 +46,7 @@ class MyApp extends StatelessWidget {
           ),
           dispose: (_, linkHandler) => linkHandler.dispose(),
         ),
+        ChangeNotifierProvider(builder: (_) => locator<CRUDModel>())
       ],
       child: AuthWidgetBuilder(
           builder: (BuildContext context, AsyncSnapshot<User> userSnapshot) {
