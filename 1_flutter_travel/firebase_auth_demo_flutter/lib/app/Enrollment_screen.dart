@@ -141,6 +141,9 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                   }
                 },
                 onSaved: (value) => name = value,
+                onChanged: (text) {
+                  print("Text $text");
+                },
               ),
               SizedBox(height: 13.0),
               Row(
