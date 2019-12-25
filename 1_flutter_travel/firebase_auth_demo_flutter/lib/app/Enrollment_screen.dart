@@ -21,7 +21,7 @@ class EnrollmentScreen extends StatefulWidget {
 }
 
 class _EnrollmentScreenState extends State<EnrollmentScreen> {
-  final GlobalKey _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   File _image;
   String name = '';
@@ -191,12 +191,12 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
               RaisedButton(
                 splashColor: Colors.indigo,
                 onPressed: () async {
-                  // if (_formKey.currentState.validate()) {
-                  // _formKey.currentState.save();
-                  await enrollmentProvider.addEnrollmentDto(EnrollmentDto(
-                      name: name, sex: '1', introduce: introduce));
-                  Navigator.pop(context);
-                  // }
+                  if (_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
+                    await enrollmentProvider.addEnrollmentDto(EnrollmentDto(
+                        name: name, sex: '1', introduce: introduce));
+                    Navigator.pop(context);
+                  }
                 },
                 child: Text('add information',
                     style: TextStyle(color: Colors.white)),
