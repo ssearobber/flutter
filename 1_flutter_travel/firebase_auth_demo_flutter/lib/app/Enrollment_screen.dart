@@ -13,6 +13,9 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth_demo_flutter/model/CRUDModel.dart';
 import 'package:firebase_auth_demo_flutter/model/EnrollmentDto.dart';
 
+import 'package:firebase_storage/firebase_storage.dart'; // For File Upload To Firestore
+import 'package:path/path.dart' as Path;
+
 class EnrollmentScreen extends StatefulWidget {
   @override
   _EnrollmentScreenState createState() {
@@ -27,6 +30,8 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
   String name = '';
   int selectedRadio = 0;
   String introduce = '';
+  dynamic fileURL = 'gs://travelauth.appspot.com';
+  String _uploadedFileURL;
 
   List<Object> images = List<Object>();
   Future<File> _imageFile;
@@ -192,9 +197,10 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                 splashColor: Colors.indigo,
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
+                    _formKey.currentState.save(); // set value
                     await enrollmentProvider.addEnrollmentDto(EnrollmentDto(
                         name: name, sex: '1', introduce: introduce));
+                    uploadFile();
                     Navigator.pop(context);
                   }
                 },
@@ -258,6 +264,19 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
         }
       }),
     );
+  }
+
+  Future uploadFile() async {
+    StorageReference storageReference =
+        FirebaseStorage.instance.ref().child('${Path.basename(_image.path)}');
+    StorageUploadTask uploadTask = storageReference.putFile(_image);
+    await uploadTask.onComplete;
+    print('File Uploaded');
+    storageReference.getDownloadURL().then((dynamic fileURL) {
+      setState(() {
+        _uploadedFileURL = fileURL;
+      });
+    });
   }
 }
 
