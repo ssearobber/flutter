@@ -268,10 +268,14 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
 
   Future uploadFile(List<Object> imgFile) async {
     ImageUploadModel imgUpload = imgFile.first;
-    StorageReference storageReference =
-        FirebaseStorage.instance.ref().child('images.jpg');
+    //passing your path with the filename to Firebase Storage Reference
+    StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('travel/${Path.basename(imgUpload.imageFile.path)}');
+    //upload the file to Firebase Storage
     StorageUploadTask uploadTask =
         storageReference.putFile(imgUpload.imageFile);
+    //Snapshot of the uploading task
     await uploadTask.onComplete;
     print('File Uploaded');
     storageReference.getDownloadURL().then((dynamic fileURL) {
