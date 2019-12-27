@@ -200,7 +200,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                     _formKey.currentState.save(); // set value
                     await enrollmentProvider.addEnrollmentDto(EnrollmentDto(
                         name: name, sex: '1', introduce: introduce));
-                    uploadFile();
+                    uploadFile(images);
                     Navigator.pop(context);
                   }
                 },
@@ -266,10 +266,12 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
     );
   }
 
-  Future uploadFile() async {
+  Future uploadFile(List<Object> imgFile) async {
+    ImageUploadModel imgUpload = imgFile.first;
     StorageReference storageReference =
-        FirebaseStorage.instance.ref().child('${Path.basename(_image.path)}');
-    StorageUploadTask uploadTask = storageReference.putFile(_image);
+        FirebaseStorage.instance.ref().child('images.jpg');
+    StorageUploadTask uploadTask =
+        storageReference.putFile(imgUpload.imageFile);
     await uploadTask.onComplete;
     print('File Uploaded');
     storageReference.getDownloadURL().then((dynamic fileURL) {
