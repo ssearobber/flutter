@@ -103,6 +103,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
   @override
   Widget build(BuildContext context) {
     final CRUDModel enrollmentProvider = Provider.of<CRUDModel>(context);
+    final User user = Provider.of<User>(context);
     return Scaffold(
       appBar: AppBar(
         // title: Text(Strings.homePage),
@@ -200,7 +201,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                     _formKey.currentState.save(); // set value
                     await enrollmentProvider.addEnrollmentDto(EnrollmentDto(
                         name: name, sex: '1', introduce: introduce));
-                    uploadFile(images);
+                    uploadFile(images, user);
                     Navigator.pop(context);
                   }
                 },
@@ -266,12 +267,12 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
     );
   }
 
-  Future uploadFile(List<Object> imgFile) async {
+  Future uploadFile(List<Object> imgFile, User user) async {
     ImageUploadModel imgUpload = imgFile.first;
     //passing your path with the filename to Firebase Storage Reference
     StorageReference storageReference = FirebaseStorage.instance
         .ref()
-        .child('travel/${Path.basename(imgUpload.imageFile.path)}');
+        .child('travel/${user.uid}/${Path.basename(imgUpload.imageFile.path)}');
     //upload the file to Firebase Storage
     StorageUploadTask uploadTask =
         storageReference.putFile(imgUpload.imageFile);
