@@ -36,6 +36,15 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
   List<Object> images = List<Object>();
   Future<File> _imageFile;
 
+  // final collRef = Firestore.instance.collection('gameLevels');
+  // DocumentReferance docReferance = collRef.document();
+
+  // docReferance.setData(map).then((doc) {
+  //   print('hop ${docReferance.documentID}');
+  // }).catchError((error) {
+  //   print(error);
+  // });
+
   @override
   void initState() {
     // TODO: implement initState
@@ -201,6 +210,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                     _formKey.currentState.save(); // set value
                     await enrollmentProvider.addEnrollmentDto(EnrollmentDto(
                         name: name, sex: '1', introduce: introduce));
+                    await enrollmentProvider.getEnrollmentDtoById('ENROLLMENT');
                     uploadFile(images, user);
                     Navigator.pop(context);
                   }
