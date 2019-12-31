@@ -1,10 +1,11 @@
 class EnrollmentDto {
+  String uId;
   String name;
   String sex;
   String introduce;
   // String img;
 
-  EnrollmentDto({this.name, this.sex, this.introduce});
+  EnrollmentDto({this.uId, this.name, this.sex, this.introduce});
 
   EnrollmentDto.fromMap(Map snapshot, String name)
       : name = name ?? '',
@@ -12,6 +13,6 @@ class EnrollmentDto {
         introduce = snapshot['introduce'] ?? '';
 
   Map<String, String> toJson() {
-    return {"name": name, "sex": sex, "introduce": introduce};
+    return {"uId": uId, "name": name, "sex": sex, "introduce": introduce};
   }
 }

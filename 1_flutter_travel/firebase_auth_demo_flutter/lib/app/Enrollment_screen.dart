@@ -210,7 +210,6 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                     _formKey.currentState.save(); // set value
                     await enrollmentProvider.addEnrollmentDto(EnrollmentDto(
                         name: name, sex: '1', introduce: introduce));
-                    await enrollmentProvider.getEnrollmentDtoById('ENROLLMENT');
                     uploadFile(images, user);
                     Navigator.pop(context);
                   }
