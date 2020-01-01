@@ -25,8 +25,14 @@ class Api {
     return ref.document(id).delete();
   }
 
-  Future<DocumentReference> addDocument(Map data) {
-    return ref.add(data);
+  // Future<DocumentReference> addDocument(Map data, String uId) {
+  //   // return ref.add(data);
+  //   return ref.document(uId).setData(data);
+  // }
+
+  Future<void> addDocument(Map data, String uId) {
+    // return ref.add(data);
+    return ref.document(uId).setData(data);
   }
 
   Future<void> updateDocument(Map data, String id) {

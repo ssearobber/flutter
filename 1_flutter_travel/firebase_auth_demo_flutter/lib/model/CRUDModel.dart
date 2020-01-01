@@ -38,8 +38,7 @@ class CRUDModel extends ChangeNotifier {
   }
 
   Future addEnrollmentDto(EnrollmentDto data) async {
-    var result = await _api.addDocument(data.toJson());
-
+    var result = await _api.addDocument(data.toJson(), data.uId);
     return;
   }
 }
