@@ -192,6 +192,11 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                   decoration: InputDecoration(
                       labelText: 'description', border: OutlineInputBorder()),
                   maxLength: 60,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter Enrollment introduce';
+                    }
+                  },
                   onSaved: (value) => introduce = value),
               SizedBox(height: 30.0),
               if (_image != null)
