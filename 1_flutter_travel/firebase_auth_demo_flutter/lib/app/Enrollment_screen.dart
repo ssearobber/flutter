@@ -28,7 +28,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
 
   File _image;
   String name = '';
-  int selectedRadio = 0;
+  String selectedRadio = '0';
   String introduce = '';
   dynamic fileURL = 'gs://travelauth.appspot.com';
   String _uploadedFileURL;
@@ -48,7 +48,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
     });
   }
 
-  void setSelectedRadio(int val) {
+  void setSelectedRadio(String val) {
     setState(() {
       selectedRadio = val;
     });
@@ -156,10 +156,10 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Radio(
-                    value: 1,
+                    value: '1',
                     groupValue: selectedRadio,
                     activeColor: Colors.blue,
-                    onChanged: (int val) {
+                    onChanged: (String val) {
                       setSelectedRadio(val);
                     },
                   ),
@@ -168,10 +168,10 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                     padding: EdgeInsets.all(8.0),
                   ),
                   Radio(
-                    value: 2,
+                    value: '2',
                     groupValue: selectedRadio,
                     activeColor: Colors.blue,
-                    onChanged: (int val) {
+                    onChanged: (String val) {
                       setSelectedRadio(val);
                     },
                   ),
@@ -207,7 +207,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                     await enrollmentProvider.addEnrollmentDto(EnrollmentDto(
                         uId: user.uid,
                         name: name,
-                        sex: '1',
+                        sex: selectedRadio,
                         introduce: introduce));
                     uploadFile(images, user);
                     Navigator.pop(context);
