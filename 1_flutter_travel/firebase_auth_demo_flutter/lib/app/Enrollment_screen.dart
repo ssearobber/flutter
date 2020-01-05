@@ -209,7 +209,13 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                         name: name,
                         sex: selectedRadio,
                         introduce: introduce));
-                    uploadFile(images, user);
+
+                    List.generate(images.length, (index) {
+                      if (images[index] is ImageUploadModel) {
+                        final ImageUploadModel imgUModel = images[index];
+                        uploadFile(imgUModel.imageFile, user);
+                      }
+                    });
                     Navigator.pop(context);
                   }
                 },
@@ -275,15 +281,16 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
     );
   }
 
-  Future uploadFile(List<Object> imgFile, User user) async {
-    ImageUploadModel imgUpload = imgFile.first;
+  Future uploadFile(File imgFile, User user) async {
+    // ImageUploadModel imgUpload = imgFile.first;
+    // ImageUploadModel imgUpload = imgFile;
+
     //passing your path with the filename to Firebase Storage Reference
     StorageReference storageReference = FirebaseStorage.instance
         .ref()
-        .child('travel/${user.uid}/${Path.basename(imgUpload.imageFile.path)}');
+        .child('travel/${user.uid}/${Path.basename(imgFile.path)}');
     //upload the file to Firebase Storage
-    StorageUploadTask uploadTask =
-        storageReference.putFile(imgUpload.imageFile);
+    StorageUploadTask uploadTask = storageReference.putFile(imgFile);
     //Snapshot of the uploading task
     await uploadTask.onComplete;
     print('File Uploaded');
