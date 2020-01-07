@@ -290,7 +290,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
         .ref()
         .child('travel/${user.uid}/${Path.basename(imgFile.path)}');
     //upload the file to Firebase Storage
-    StorageUploadTask uploadTask = storageReference.putFile(imgFile);
+    final StorageUploadTask uploadTask = storageReference.putFile(imgFile);
     //Snapshot of the uploading task
     await uploadTask.onComplete;
     print('File Uploaded');
