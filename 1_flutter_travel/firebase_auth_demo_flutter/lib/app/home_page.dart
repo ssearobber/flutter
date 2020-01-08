@@ -43,33 +43,35 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     return Scaffold(
-      appBar: AppBar(
-        // title: Text(Strings.homePage),
-        backgroundColor: Colors.grey[200],
-        elevation: 0.0,
-        actions: <Widget>[
-          FlatButton(
-            key: Key(Keys.logout),
-            child: Text(
-              Strings.logout,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Colors.indigo,
+        appBar: AppBar(
+          // title: Text(Strings.homePage),
+          backgroundColor: Colors.grey[200],
+          elevation: 0.0,
+          actions: <Widget>[
+            FlatButton(
+              key: Key(Keys.logout),
+              child: Text(
+                Strings.logout,
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.indigo,
+                ),
               ),
+              onPressed: () => _confirmSignOut(context),
             ),
-            onPressed: () => _confirmSignOut(context),
-          ),
-        ],
-        //this is appeared photoUrl
-        // bottom: PreferredSize(
-        //   preferredSize: Size.fromHeight(130.0),
-        //   child: _buildUserInfo(user),
-        // ),
-        iconTheme: IconThemeData(color: Colors.indigo),
-      ),
-      backgroundColor: Colors.grey[200],
-      drawer: isLoading ? null : DeveloperMenu(),
-    );
+          ],
+          //this is appeared photoUrl
+          // bottom: PreferredSize(
+          //   preferredSize: Size.fromHeight(130.0),
+          //   child: _buildUserInfo(user),
+          // ),
+          iconTheme: IconThemeData(color: Colors.indigo),
+        ),
+        backgroundColor: Colors.grey[200],
+        drawer: isLoading ? null : DeveloperMenu(),
+        body: Center(
+          child: Text('s'),
+        ));
   }
   //this is appeared photoUrl of widget
   // Widget _buildUserInfo(User user) {
