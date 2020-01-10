@@ -70,7 +70,7 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.grey[200],
         drawer: isLoading ? null : DeveloperMenu(),
         body: Center(
-          child: Text('sorry'),
+          child: Text('sorry sorry'),
         ));
   }
   //this is appeared photoUrl of widget
