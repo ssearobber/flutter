@@ -69,8 +69,71 @@ class HomePage extends StatelessWidget {
         ),
         backgroundColor: Colors.grey[200],
         drawer: isLoading ? null : DeveloperMenu(),
-        body: Center(
-          child: Text('sorry sorry'),
+        body: ListView.builder(
+          padding: EdgeInsets.all(16),
+          itemBuilder: (context, i) {
+            return Container(
+              height: 130,
+              child: Card(
+                elevation: 1.0,
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            width: 100.0,
+                            height: 100.0,
+                            decoration: BoxDecoration(
+                                color: Colors.red,
+                                image: DecorationImage(
+                                    image: AssetImage('assets/korea.jpg'),
+                                    fit: BoxFit.cover),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(75.0)),
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 7.0, color: Colors.black)
+                                ]),
+                          ),
+                        )),
+                    GestureDetector(
+                      onTap: () {
+                        return showDialog<void>(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('hello dreams'),
+                                content: const Text('no longer'),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text('ok'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  )
+                                ],
+                              );
+                            });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(30.0),
+                        child: Chip(
+                          label: Text('data'),
+                          shadowColor: Colors.blue,
+                          backgroundColor: Colors.green,
+                          elevation: 10,
+                          autofocus: true,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
         ));
   }
   //this is appeared photoUrl of widget
