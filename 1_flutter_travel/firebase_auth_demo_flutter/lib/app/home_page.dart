@@ -121,7 +121,7 @@ class HomePage extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.all(30.0),
                         child: Chip(
-                          label: Text('data'),
+                          label: Text('data2'),
                           shadowColor: Colors.blue,
                           backgroundColor: Colors.green,
                           elevation: 10,
