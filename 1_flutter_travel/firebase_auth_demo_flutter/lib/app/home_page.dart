@@ -11,9 +11,26 @@ import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
 import 'package:firebase_auth_demo_flutter/app/sign_in/developer_menu.dart';
+import 'package:firebase_auth_demo_flutter/model/hotel_list_data.dart';
+import 'package:firebase_auth_demo_flutter/app/hotel_list_view.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool isLoading = false;
+
+  List<HotelListData> hotelList = HotelListData.hotelList;
+  AnimationController animationController;
+
+  @override
+  void initState() {
+    animationController = AnimationController(
+        duration: const Duration(milliseconds: 1000), vsync: this);
+    super.initState();
+  }
 
   Future<void> _signOut(BuildContext context) async {
     try {
@@ -70,68 +87,22 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.grey[200],
         drawer: isLoading ? null : DeveloperMenu(),
         body: ListView.builder(
-          padding: EdgeInsets.all(16),
-          itemBuilder: (context, i) {
-            return Container(
-              height: 130,
-              child: Card(
-                elevation: 1.0,
-                child: Row(
-                  children: <Widget>[
-                    Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            width: 100.0,
-                            height: 100.0,
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                image: DecorationImage(
-                                    image: AssetImage('assets/korea.jpg'),
-                                    fit: BoxFit.cover),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(75.0)),
-                                boxShadow: [
-                                  BoxShadow(
-                                      blurRadius: 7.0, color: Colors.black)
-                                ]),
-                          ),
-                        )),
-                    GestureDetector(
-                      onTap: () {
-                        return showDialog<void>(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('hello dreams'),
-                                content: const Text('no longer'),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    child: Text('ok'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  )
-                                ],
-                              );
-                            });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(30.0),
-                        child: Chip(
-                          label: Text('data2'),
-                          shadowColor: Colors.blue,
-                          backgroundColor: Colors.green,
-                          elevation: 10,
-                          autofocus: true,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+          itemCount: hotelList.length,
+          padding: const EdgeInsets.only(top: 8),
+          scrollDirection: Axis.vertical,
+          itemBuilder: (BuildContext context, int index) {
+            final int count = hotelList.length > 10 ? 10 : hotelList.length;
+            final Animation<double> animation =
+                Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                    parent: animationController,
+                    curve: Interval((1 / count) * index, 1.0,
+                        curve: Curves.fastOutSlowIn)));
+            animationController.forward();
+            return HotelListView(
+              callback: () {},
+              hotelData: hotelList[index],
+              animation: animation,
+              animationController: animationController,
             );
           },
         ));
