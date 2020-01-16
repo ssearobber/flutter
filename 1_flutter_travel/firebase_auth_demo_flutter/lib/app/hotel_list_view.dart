@@ -87,42 +87,42 @@ class HotelListView extends StatelessWidget {
                                                 fontSize: 22,
                                               ),
                                             ),
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text(
-                                                  hotelData.subTxt,
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.grey
-                                                          .withOpacity(0.8)),
-                                                ),
-                                                const SizedBox(
-                                                  width: 4,
-                                                ),
-                                                Icon(
-                                                  FontAwesomeIcons.mapMarkerAlt,
-                                                  size: 12,
-                                                  color: HotelAppTheme
-                                                          .buildLightTheme()
-                                                      .primaryColor,
-                                                ),
-                                                Expanded(
-                                                  child: Text(
-                                                    '${hotelData.dist.toStringAsFixed(1)} km to city',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.grey
-                                                            .withOpacity(0.8)),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                            // Row(
+                                            //   crossAxisAlignment:
+                                            //       CrossAxisAlignment.center,
+                                            //   mainAxisAlignment:
+                                            //       MainAxisAlignment.start,
+                                            //   children: <Widget>[
+                                            //     Text(
+                                            //       hotelData.subTxt,
+                                            //       style: TextStyle(
+                                            //           fontSize: 14,
+                                            //           color: Colors.grey
+                                            //               .withOpacity(0.8)),
+                                            //     ),
+                                            //     const SizedBox(
+                                            //       width: 4,
+                                            //     ),
+                                            //     Icon(
+                                            //       FontAwesomeIcons.mapMarkerAlt,
+                                            //       size: 12,
+                                            //       color: HotelAppTheme
+                                            //               .buildLightTheme()
+                                            //           .primaryColor,
+                                            //     ),
+                                            //     Expanded(
+                                            //       child: Text(
+                                            //         '${hotelData.dist.toStringAsFixed(1)} km to city',
+                                            //         overflow:
+                                            //             TextOverflow.ellipsis,
+                                            //         style: TextStyle(
+                                            //             fontSize: 14,
+                                            //             color: Colors.grey
+                                            //                 .withOpacity(0.8)),
+                                            //       ),
+                                            //     ),
+                                            //   ],
+                                            // ),
                                             Padding(
                                               padding:
                                                   const EdgeInsets.only(top: 4),
@@ -155,33 +155,33 @@ class HotelListView extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 16, top: 8),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: <Widget>[
-                                        Text(
-                                          '\$${hotelData.perNight}',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 22,
-                                          ),
-                                        ),
-                                        Text(
-                                          '/per night',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color:
-                                                  Colors.grey.withOpacity(0.8)),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(
+                                  //       right: 16, top: 8),
+                                  //   child: Column(
+                                  //     mainAxisAlignment:
+                                  //         MainAxisAlignment.center,
+                                  //     crossAxisAlignment:
+                                  //         CrossAxisAlignment.end,
+                                  //     children: <Widget>[
+                                  //       Text(
+                                  //         '\$${hotelData.perNight}',
+                                  //         textAlign: TextAlign.left,
+                                  //         style: TextStyle(
+                                  //           fontWeight: FontWeight.w600,
+                                  //           fontSize: 22,
+                                  //         ),
+                                  //       ),
+                                  //       Text(
+                                  //         '/per night',
+                                  //         style: TextStyle(
+                                  //             fontSize: 14,
+                                  //             color:
+                                  //                 Colors.grey.withOpacity(0.8)),
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),

@@ -91,8 +91,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           padding: const EdgeInsets.only(top: 8),
           scrollDirection: Axis.vertical,
           itemBuilder: (BuildContext context, int index) {
-            final int count =
-                hotelList.length > 5 ? 5 : hotelList.length; // 10을 5로 바꿨음
+            final int count = hotelList.length > 10 ? 10 : hotelList.length;
             final Animation<double> animation =
                 Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
                     parent: animationController,
