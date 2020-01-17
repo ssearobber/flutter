@@ -138,7 +138,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
             children: <Widget>[
               TextFormField(
                 decoration: InputDecoration(
-                    labelText: 'name', border: OutlineInputBorder()),
+                    labelText: 'nick name', border: OutlineInputBorder()),
                 maxLength: 12,
                 maxLengthEnforced: true,
                 validator: (value) {
