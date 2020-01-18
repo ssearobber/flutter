@@ -13,6 +13,8 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth_demo_flutter/app/sign_in/developer_menu.dart';
 import 'package:firebase_auth_demo_flutter/model/hotel_list_data.dart';
 import 'package:firebase_auth_demo_flutter/app/hotel_list_view.dart';
+import 'package:firebase_auth_demo_flutter/model/CRUDModel.dart';
+import 'package:firebase_auth_demo_flutter/model/EnrollmentDto.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,6 +25,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool isLoading = false;
 
   List<HotelListData> hotelList = HotelListData.hotelList;
+  List<EnrollmentDto> enrollmentDtos;
   AnimationController animationController;
 
   @override
@@ -58,54 +61,67 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    return Scaffold(
-        appBar: AppBar(
-          // title: Text(Strings.homePage),
-          backgroundColor: Colors.grey[200],
-          elevation: 0.0,
-          actions: <Widget>[
-            FlatButton(
-              key: Key(Keys.logout),
-              child: Text(
-                Strings.logout,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.indigo,
-                ),
+    // final user = Provider.of<User>(context);
+    final CRUDModel enrollmentProvider = Provider.of<CRUDModel>(context);
+
+    // print('name :' + enrollmentDtos[0);
+    // print('name2 :' + enrollmentDtos[2].name);
+    return FutureBuilder<List<EnrollmentDto>>(
+        future: enrollmentProvider.fetchEnrollmentDtos(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            enrollmentDtos = snapshot.data;
+          }
+          return Scaffold(
+              appBar: AppBar(
+                // title: Text(Strings.homePage),
+                backgroundColor: Colors.grey[200],
+                elevation: 0.0,
+                actions: <Widget>[
+                  FlatButton(
+                    key: Key(Keys.logout),
+                    child: Text(
+                      Strings.logout,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.indigo,
+                      ),
+                    ),
+                    onPressed: () => _confirmSignOut(context),
+                  ),
+                ],
+                //this is appeared photoUrl
+                // bottom: PreferredSize(
+                //   preferredSize: Size.fromHeight(130.0),
+                //   child: _buildUserInfo(user),
+                // ),
+                iconTheme: IconThemeData(color: Colors.indigo),
               ),
-              onPressed: () => _confirmSignOut(context),
-            ),
-          ],
-          //this is appeared photoUrl
-          // bottom: PreferredSize(
-          //   preferredSize: Size.fromHeight(130.0),
-          //   child: _buildUserInfo(user),
-          // ),
-          iconTheme: IconThemeData(color: Colors.indigo),
-        ),
-        backgroundColor: Colors.grey[200],
-        drawer: isLoading ? null : DeveloperMenu(),
-        body: ListView.builder(
-          itemCount: hotelList.length,
-          padding: const EdgeInsets.only(top: 8),
-          scrollDirection: Axis.vertical,
-          itemBuilder: (BuildContext context, int index) {
-            final int count = hotelList.length > 10 ? 10 : hotelList.length;
-            final Animation<double> animation =
-                Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                    parent: animationController,
-                    curve: Interval((1 / count) * index, 1.0,
-                        curve: Curves.fastOutSlowIn)));
-            animationController.forward();
-            return HotelListView(
-              callback: () {},
-              hotelData: hotelList[index],
-              animation: animation,
-              animationController: animationController,
-            );
-          },
-        ));
+              backgroundColor: Colors.grey[200],
+              drawer: isLoading ? null : DeveloperMenu(),
+              body: ListView.builder(
+                itemCount: enrollmentDtos.length,
+                padding: const EdgeInsets.only(top: 8),
+                scrollDirection: Axis.vertical,
+                itemBuilder: (BuildContext context, int index) {
+                  final int count =
+                      enrollmentDtos.length > 10 ? 10 : enrollmentDtos.length;
+                  final Animation<double> animation =
+                      Tween<double>(begin: 0.0, end: 1.0).animate(
+                          CurvedAnimation(
+                              parent: animationController,
+                              curve: Interval((1 / count) * index, 1.0,
+                                  curve: Curves.fastOutSlowIn)));
+                  animationController.forward();
+                  return HotelListView(
+                    callback: () {},
+                    enrollmentDto: enrollmentDtos[index],
+                    animation: animation,
+                    animationController: animationController,
+                  );
+                },
+              ));
+        });
   }
   //this is appeared photoUrl of widget
   // Widget _buildUserInfo(User user) {

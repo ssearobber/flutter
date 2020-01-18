@@ -4,18 +4,19 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import 'package:firebase_auth_demo_flutter/model/hotel_list_data.dart';
+import 'package:firebase_auth_demo_flutter/model/EnrollmentDto.dart';
 
 class HotelListView extends StatelessWidget {
   const HotelListView(
       {Key key,
-      this.hotelData,
+      this.enrollmentDto,
       this.animationController,
       this.animation,
       this.callback})
       : super(key: key);
 
   final VoidCallback callback;
-  final HotelListData hotelData;
+  final EnrollmentDto enrollmentDto;
   final AnimationController animationController;
   final Animation<dynamic> animation;
 
@@ -57,7 +58,7 @@ class HotelListView extends StatelessWidget {
                             AspectRatio(
                               aspectRatio: 2,
                               child: Image.asset(
-                                hotelData.imagePath,
+                                enrollmentDto.introduce,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -80,7 +81,7 @@ class HotelListView extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text(
-                                              hotelData.titleTxt,
+                                              enrollmentDto.name,
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w600,
@@ -131,7 +132,7 @@ class HotelListView extends StatelessWidget {
                                                   SmoothStarRating(
                                                     allowHalfRating: true,
                                                     starCount: 5,
-                                                    rating: hotelData.rating,
+                                                    // rating: hotelData.rating,
                                                     size: 20,
                                                     color: HotelAppTheme
                                                             .buildLightTheme()
@@ -140,13 +141,13 @@ class HotelListView extends StatelessWidget {
                                                             .buildLightTheme()
                                                         .primaryColor,
                                                   ),
-                                                  Text(
-                                                    ' ${hotelData.reviews} Reviews',
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.grey
-                                                            .withOpacity(0.8)),
-                                                  ),
+                                                  // Text(
+                                                  //   ' ${hotelData.reviews} Reviews',
+                                                  //   style: TextStyle(
+                                                  //       fontSize: 14,
+                                                  //       color: Colors.grey
+                                                  //           .withOpacity(0.8)),
+                                                  // ),
                                                 ],
                                               ),
                                             ),

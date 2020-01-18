@@ -44,7 +44,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
       images.add("Add Image");
       images.add("Add Image");
       images.add("Add Image");
-      images.add("Add Image");
+      // images.add("Add Image");
     });
   }
 

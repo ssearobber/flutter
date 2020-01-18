@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 class CRUDModel extends ChangeNotifier {
   Api _api = locator<Api>();
 
-  List<EnrollmentDto> enrollmentDtos;
+  // List<EnrollmentDto> enrollmentDtos;
 
   Future<List<EnrollmentDto>> fetchEnrollmentDtos() async {
     var result = await _api.getDataCollection();
-    enrollmentDtos = result.documents
+    final List<EnrollmentDto> enrollmentDtos = result.documents
         .map((doc) => EnrollmentDto.fromMap(doc.data, doc.documentID))
         .toList();
     return enrollmentDtos;
