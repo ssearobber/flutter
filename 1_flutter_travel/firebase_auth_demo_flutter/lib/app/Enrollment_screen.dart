@@ -294,11 +294,11 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
     //Snapshot of the uploading task
     await uploadTask.onComplete;
     print('File Uploaded');
-    storageReference.getDownloadURL().then((dynamic fileURL) {
-      setState(() {
-        _uploadedFileURL = fileURL;
-      });
-    });
+    // storageReference.getDownloadURL().then((dynamic fileURL) {
+    //   setState(() {
+    //     _uploadedFileURL = fileURL;
+    //   });
+    // });
   }
 }
 

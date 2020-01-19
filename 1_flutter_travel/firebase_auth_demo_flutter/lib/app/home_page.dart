@@ -6,6 +6,7 @@ import 'package:firebase_auth_demo_flutter/common_widgets/platform_exception_ale
 import 'package:firebase_auth_demo_flutter/constants/keys.dart';
 import 'package:firebase_auth_demo_flutter/constants/strings.dart';
 import 'package:firebase_auth_demo_flutter/services/auth_service.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +28,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<HotelListData> hotelList = HotelListData.hotelList;
   List<EnrollmentDto> enrollmentDtos;
   AnimationController animationController;
+
+  FirebaseStorage firebaseStorage =
+      new FirebaseStorage(storageBucket: 'gs://travelauth.appspot.com/');
 
   @override
   void initState() {
@@ -59,10 +63,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
   }
 
+  // Future<String> fetchUser(String user) async {
+  //   StorageReference storageReference = firebaseStorage
+  //       .ref()
+  //       .child('travel/$user')
+  //       .child('20200112_154731.jpg');
+  //   String imageUrl = await storageReference.getDownloadURL();
+
+  //   return imageUrl;
+  // }
+
   @override
   Widget build(BuildContext context) {
     // final user = Provider.of<User>(context);
     final CRUDModel enrollmentProvider = Provider.of<CRUDModel>(context);
+    // final User user = Provider.of<User>(context);
 
     // print('name :' + enrollmentDtos[0);
     // print('name2 :' + enrollmentDtos[2].name);
