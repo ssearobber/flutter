@@ -21,6 +21,12 @@ class CRUDModel extends ChangeNotifier {
     //     .child('20200112_154731.jpg');
     // String imageUrl = await storageReference.getDownloadURL();
 
+    // await _api.getDataCollection().then((data) {
+    //   List<EnrollmentDto> enrollmentDtos = data.documents
+    //       .map((doc) => EnrollmentDto.fromMap(doc.data, doc.documentID))
+    //       .toList();
+    //   return enrollmentDtos;
+    // });
     var result = await _api.getDataCollection();
     final List<EnrollmentDto> enrollmentDtos = result.documents
         .map((doc) => EnrollmentDto.fromMap(doc.data, doc.documentID))

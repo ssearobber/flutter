@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool isLoading = false;
 
   List<HotelListData> hotelList = HotelListData.hotelList;
-  List<EnrollmentDto> enrollmentDtos;
+  List<EnrollmentDto> enrollmentDtos = [];
   AnimationController animationController;
 
   FirebaseStorage firebaseStorage =
@@ -63,24 +63,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
   }
 
-  // Future<String> fetchUser(String user) async {
-  //   StorageReference storageReference = firebaseStorage
-  //       .ref()
-  //       .child('travel/$user')
-  //       .child('20200112_154731.jpg');
-  //   String imageUrl = await storageReference.getDownloadURL();
+  // Future<List<EnrollmentDto>> fetchUser(BuildContext context) async {
+  //   final CRUDModel enrollmentProvider2 = Provider.of<CRUDModel>(context);
+  //   final List<EnrollmentDto> enrollmentDtos =
+  //       await enrollmentProvider2.fetchEnrollmentDtos();
 
-  //   return imageUrl;
+  //   return enrollmentDtos;
   // }
 
   @override
   Widget build(BuildContext context) {
     // final user = Provider.of<User>(context);
     final CRUDModel enrollmentProvider = Provider.of<CRUDModel>(context);
+    // List<EnrollmentDto> enrollmentDtos = fetchUser(context);
     // final User user = Provider.of<User>(context);
 
-    // print('name :' + enrollmentDtos[0);
-    // print('name2 :' + enrollmentDtos[2].name);
     return FutureBuilder<List<EnrollmentDto>>(
         future: enrollmentProvider.fetchEnrollmentDtos(),
         builder: (context, snapshot) {

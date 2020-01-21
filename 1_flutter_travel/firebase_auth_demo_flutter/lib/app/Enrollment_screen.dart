@@ -35,6 +35,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
 
   List<Object> images = List<Object>();
   Future<File> _imageFile;
+  List<String> imgUpload = List<String>();
 
   @override
   void initState() {
@@ -45,6 +46,12 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
       images.add("Add Image");
       images.add("Add Image");
       // images.add("Add Image");
+    });
+  }
+
+  void setImgUpload(String val) {
+    setState(() {
+      imgUpload.add(val);
     });
   }
 
@@ -208,7 +215,10 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                         uId: user.uid,
                         name: name,
                         sex: selectedRadio,
-                        introduce: introduce));
+                        introduce: introduce,
+                        img: imgUpload[0],
+                        img2: imgUpload[1],
+                        img3: imgUpload[2]));
 
                     List.generate(images.length, (index) {
                       if (images[index] is ImageUploadModel) {
@@ -216,6 +226,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                         uploadFile(imgUModel.imageFile, user);
                       }
                     });
+
                     Navigator.pop(context);
                   }
                 },
@@ -281,7 +292,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
     );
   }
 
-  Future uploadFile(File imgFile, User user) async {
+  Future<void> uploadFile(File imgFile, User user) async {
     // ImageUploadModel imgUpload = imgFile.first;
     // ImageUploadModel imgUpload = imgFile;
 
@@ -292,11 +303,13 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
     //upload the file to Firebase Storage
     final StorageUploadTask uploadTask = storageReference.putFile(imgFile);
     //Snapshot of the uploading task
-    await uploadTask.onComplete;
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    setImgUpload(downloadUrl);
     print('File Uploaded');
     // storageReference.getDownloadURL().then((dynamic fileURL) {
     //   setState(() {
-    //     _uploadedFileURL = fileURL;
+    //     imgUpload.add(fileURL);
     //   });
     // });
   }
