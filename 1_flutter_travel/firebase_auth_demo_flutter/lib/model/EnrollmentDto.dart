@@ -19,7 +19,11 @@ class EnrollmentDto {
 
   EnrollmentDto.fromMap(Map snapshot, String name)
       : name = name ?? '',
+        uId = snapshot['uId'] ?? '',
         sex = snapshot['sex'] ?? '',
+        img = snapshot['img'] ?? '',
+        img2 = snapshot['img2'] ?? '',
+        img3 = snapshot['img3'] ?? '',
         introduce = snapshot['introduce'] ?? '';
 
   Map<String, String> toJson() {

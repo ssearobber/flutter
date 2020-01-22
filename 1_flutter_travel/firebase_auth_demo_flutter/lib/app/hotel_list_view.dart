@@ -56,12 +56,16 @@ class HotelListView extends StatelessWidget {
                         Column(
                           children: <Widget>[
                             AspectRatio(
-                              aspectRatio: 2,
-                              child: Image.asset(
-                                enrollmentDto.sex,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                                aspectRatio: 2,
+                                child: Image.network(
+                                  enrollmentDto.img,
+                                  fit: BoxFit.cover,
+                                )
+                                // Image.asset(
+                                //   enrollmentDto.sex,
+                                //   fit: BoxFit.cover,
+                                // ),
+                                ),
                             Container(
                               color: HotelAppTheme.buildLightTheme()
                                   .backgroundColor,
