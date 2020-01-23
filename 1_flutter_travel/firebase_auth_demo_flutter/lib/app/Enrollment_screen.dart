@@ -30,12 +30,13 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
   String name = '';
   String selectedRadio = '0';
   String introduce = '';
-  dynamic fileURL = 'gs://travelauth.appspot.com';
-  String _uploadedFileURL;
+  // dynamic fileURL = 'gs://travelauth.appspot.com';
+  // String _uploadedFileURL;
 
   List<Object> images = List<Object>();
   Future<File> _imageFile;
-  List<String> imgUpload = List<String>();
+  List<String> imgUpload = ['none', 'none', 'none'];
+  StorageTaskSnapshot taskSnapshot;
 
   @override
   void initState() {
@@ -211,6 +212,14 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save(); // set value
+                    List.generate(images.length, (index) {
+                      if (images[index] is ImageUploadModel) {
+                        final ImageUploadModel imgUModel = images[index];
+                        uploadFile(imgUModel.imageFile, user);
+                       taskSnapshot.ref.getDownloadURL();
+                      }
+                    });
+
                     await enrollmentProvider.addEnrollmentDto(EnrollmentDto(
                         uId: user.uid,
                         name: name,
@@ -219,13 +228,6 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                         img: imgUpload[0],
                         img2: imgUpload[1],
                         img3: imgUpload[2]));
-
-                    List.generate(images.length, (index) {
-                      if (images[index] is ImageUploadModel) {
-                        final ImageUploadModel imgUModel = images[index];
-                        uploadFile(imgUModel.imageFile, user);
-                      }
-                    });
 
                     Navigator.pop(context);
                   }
@@ -303,9 +305,19 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
     //upload the file to Firebase Storage
     final StorageUploadTask uploadTask = storageReference.putFile(imgFile);
     //Snapshot of the uploading task
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-    setImgUpload(downloadUrl);
+    // StorageTaskSnapshot taskSnapshot =
+    taskSnapshot = await uploadTask.onComplete;
+    // .then((StorageTaskSnapshot snapshot) {
+    //   snapshot.ref.getDownloadURL().then((dynamic url) {
+    //     imgUpload.add(url.toString());
+    //   });
+    // });
+
+    // String downloadUrl =
+    // await taskSnapshot.ref.getDownloadURL().then((dynamic data) {
+    //   imgUpload.add(data);
+    // });
+    // setImgUpload(downloadUrl);
     print('File Uploaded');
     // storageReference.getDownloadURL().then((dynamic fileURL) {
     //   setState(() {

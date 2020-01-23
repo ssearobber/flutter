@@ -17,9 +17,9 @@ class EnrollmentDto {
       this.img2,
       this.img3});
 
-  EnrollmentDto.fromMap(Map snapshot, String name)
-      : name = name ?? '',
-        uId = snapshot['uId'] ?? '',
+  EnrollmentDto.fromMap(Map snapshot, String uId)
+      : uId = uId ?? '',
+        name = snapshot['name'] ?? '',
         sex = snapshot['sex'] ?? '',
         img = snapshot['img'] ?? '',
         img2 = snapshot['img2'] ?? '',
