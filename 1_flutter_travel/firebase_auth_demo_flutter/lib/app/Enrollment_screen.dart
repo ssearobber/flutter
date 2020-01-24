@@ -36,7 +36,6 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
   List<Object> images = List<Object>();
   Future<File> _imageFile;
   List<String> imgUpload = ['none', 'none', 'none'];
-  StorageTaskSnapshot taskSnapshot;
 
   @override
   void initState() {
@@ -215,19 +214,20 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                     List.generate(images.length, (index) {
                       if (images[index] is ImageUploadModel) {
                         final ImageUploadModel imgUModel = images[index];
-                        uploadFile(imgUModel.imageFile, user);
-                       taskSnapshot.ref.getDownloadURL();
+                        imgUModel.index = index;
+                        uploadFile(imgUModel, user);
                       }
                     });
 
                     await enrollmentProvider.addEnrollmentDto(EnrollmentDto(
-                        uId: user.uid,
-                        name: name,
-                        sex: selectedRadio,
-                        introduce: introduce,
-                        img: imgUpload[0],
-                        img2: imgUpload[1],
-                        img3: imgUpload[2]));
+                      uId: user.uid,
+                      name: name,
+                      sex: selectedRadio,
+                      introduce: introduce,
+                      img: imgUpload[0],
+                      // img2: imgUpload[1],
+                      // img3: imgUpload[2]
+                    ));
 
                     Navigator.pop(context);
                   }
@@ -294,29 +294,31 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
     );
   }
 
-  Future<void> uploadFile(File imgFile, User user) async {
+  Future<void> uploadFile(ImageUploadModel imgUModel, User user) async {
     // ImageUploadModel imgUpload = imgFile.first;
     // ImageUploadModel imgUpload = imgFile;
 
     //passing your path with the filename to Firebase Storage Reference
     StorageReference storageReference = FirebaseStorage.instance
         .ref()
-        .child('travel/${user.uid}/${Path.basename(imgFile.path)}');
+        .child('travel/${user.uid}/${Path.basename(imgUModel.imageFile.path)}');
     //upload the file to Firebase Storage
-    final StorageUploadTask uploadTask = storageReference.putFile(imgFile);
+    final StorageUploadTask uploadTask =
+        storageReference.putFile(imgUModel.imageFile);
     //Snapshot of the uploading task
     // StorageTaskSnapshot taskSnapshot =
-    taskSnapshot = await uploadTask.onComplete;
-    // .then((StorageTaskSnapshot snapshot) {
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    //     .then((StorageTaskSnapshot snapshot) {
     //   snapshot.ref.getDownloadURL().then((dynamic url) {
-    //     imgUpload.add(url.toString());
+    //     // imgUpload.add(url.toString());
+    //     imgUpload.insert(imgUModel.index, url.toString());
     //   });
     // });
 
     // String downloadUrl =
-    // await taskSnapshot.ref.getDownloadURL().then((dynamic data) {
-    //   imgUpload.add(data);
-    // });
+    await taskSnapshot.ref.getDownloadURL().then((dynamic data) {
+      imgUpload.add(data);
+    });
     // setImgUpload(downloadUrl);
     print('File Uploaded');
     // storageReference.getDownloadURL().then((dynamic fileURL) {
@@ -332,11 +334,12 @@ class ImageUploadModel {
   bool uploading;
   File imageFile;
   String imageUrl;
+  int index;
 
-  ImageUploadModel({
-    this.isUploaded,
-    this.uploading,
-    this.imageFile,
-    this.imageUrl,
-  });
+  ImageUploadModel(
+      {this.isUploaded,
+      this.uploading,
+      this.imageFile,
+      this.imageUrl,
+      this.index});
 }
