@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -34,8 +36,10 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
   // String _uploadedFileURL;
 
   List<Object> images = List<Object>();
+  List<ImageUploadModel> convertObjListToImageUploadModelList =
+      List<ImageUploadModel>();
   Future<File> _imageFile;
-  List<String> imgUpload = ['none', 'none', 'none'];
+  List<String> imgUpload = ['noen', 'noen', 'noen'];
 
   @override
   void initState() {
@@ -101,6 +105,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
         imageUpload.isUploaded = false;
         imageUpload.uploading = false;
         imageUpload.imageFile = file;
+        imageUpload.index = index;
         imageUpload.imageUrl = '';
         images.replaceRange(index, index + 1, [imageUpload]);
       });
@@ -213,12 +218,16 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                     _formKey.currentState.save(); // set value
                     List.generate(images.length, (index) {
                       if (images[index] is ImageUploadModel) {
-                        final ImageUploadModel imgUModel = images[index];
-                        imgUModel.index = index;
-                        uploadFile(imgUModel, user);
+                        // images2[index] = images[index];
+                        convertObjListToImageUploadModelList.add(images[index]);
+                        // imgUModel.index = index;
                       }
                     });
-
+                    // List<ImageUploadModel> imgUModel = images;
+                    // imgUModel.index = 0;
+                    await uploadFile(
+                        convertObjListToImageUploadModelList, user);
+                    // debugPrint(imgUpload.toString());
                     await enrollmentProvider.addEnrollmentDto(EnrollmentDto(
                       uId: user.uid,
                       name: name,
@@ -294,38 +303,29 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
     );
   }
 
-  Future<void> uploadFile(ImageUploadModel imgUModel, User user) async {
-    // ImageUploadModel imgUpload = imgFile.first;
-    // ImageUploadModel imgUpload = imgFile;
+  Future<void> uploadFile(
+      List<ImageUploadModel> convertObjListToImageUploadModelList,
+      User user) async {
+    // imgUModel.forEach((f) async {  // forEach랑 for문이랑 await 처리가 다르다.
+    for (ImageUploadModel imageUploadModel
+        in convertObjListToImageUploadModelList) {
+      StorageReference storageReference = FirebaseStorage.instance.ref().child(
+          'travel/${user.uid}/${Path.basename(imageUploadModel.imageFile.path)}');
+      //upload the file to Firebase Storage
+      final StorageUploadTask uploadTask =
+          storageReference.putFile(imageUploadModel.imageFile);
+      //Snapshot of the uploading task
+      // StorageTaskSnapshot taskSnapshot =
+      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
 
-    //passing your path with the filename to Firebase Storage Reference
-    StorageReference storageReference = FirebaseStorage.instance
-        .ref()
-        .child('travel/${user.uid}/${Path.basename(imgUModel.imageFile.path)}');
-    //upload the file to Firebase Storage
-    final StorageUploadTask uploadTask =
-        storageReference.putFile(imgUModel.imageFile);
-    //Snapshot of the uploading task
-    // StorageTaskSnapshot taskSnapshot =
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    //     .then((StorageTaskSnapshot snapshot) {
-    //   snapshot.ref.getDownloadURL().then((dynamic url) {
-    //     // imgUpload.add(url.toString());
-    //     imgUpload.insert(imgUModel.index, url.toString());
-    //   });
-    // });
-
-    // String downloadUrl =
-    await taskSnapshot.ref.getDownloadURL().then((dynamic data) {
-      imgUpload.add(data);
-    });
-    // setImgUpload(downloadUrl);
-    print('File Uploaded');
-    // storageReference.getDownloadURL().then((dynamic fileURL) {
-    //   setState(() {
-    //     imgUpload.add(fileURL);
-    //   });
-    // });
+      // String downloadUrl =
+      await taskSnapshot.ref.getDownloadURL().then((dynamic data) {
+        imgUpload[imageUploadModel.index] = data;
+        debugPrint('Enroll' + data.toString());
+      });
+      // setImgUpload(downloadUrl);
+      print('File Uploaded');
+    }
   }
 }
 
