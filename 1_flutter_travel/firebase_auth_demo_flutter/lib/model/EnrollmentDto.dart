@@ -28,13 +28,13 @@ class EnrollmentDto {
 
   Map<String, String> toJson() {
     return {
-      "uId": uId,
-      "name": name,
-      "sex": sex,
-      "introduce": introduce,
-      "img": img,
-      "img2": img2,
-      "img3": img3,
+      'uId': uId,
+      'name': name,
+      'sex': sex,
+      'introduce': introduce,
+      'img': img,
+      'img2': img2,
+      'img3': img3,
     };
   }
 }

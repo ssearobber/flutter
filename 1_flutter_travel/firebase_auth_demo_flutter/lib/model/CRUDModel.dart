@@ -3,45 +3,17 @@ import 'package:firebase_auth_demo_flutter/model/Api.dart';
 import 'package:firebase_auth_demo_flutter/model/EnrollmentDto.dart';
 import 'package:firebase_auth_demo_flutter/Locator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class CRUDModel extends ChangeNotifier {
   Api _api = locator<Api>();
 
-  FirebaseStorage firebaseStorage =
-      new FirebaseStorage(storageBucket: 'gs://travelauth.appspot.com/');
-
-  // List<EnrollmentDto> enrollmentDtos;
-
   Future<List<EnrollmentDto>> fetchEnrollmentDtos() async {
-    // StorageReference storageReference = firebaseStorage
-    //     .ref()
-    //     .child('travel/$user')
-    //     .child('20200112_154731.jpg');
-    // String imageUrl = await storageReference.getDownloadURL();
-
-    // await _api.getDataCollection().then((data) {
-    //   List<EnrollmentDto> enrollmentDtos = data.documents
-    //       .map((doc) => EnrollmentDto.fromMap(doc.data, doc.documentID))
-    //       .toList();
-    //   return enrollmentDtos;
-    // });
     var result = await _api.getDataCollection();
     final List<EnrollmentDto> enrollmentDtos = result.documents
         .map((doc) => EnrollmentDto.fromMap(doc.data, doc.documentID))
         .toList();
     return enrollmentDtos;
-  }
-
-  Future<String> fetchUser(String user) async {
-    StorageReference storageReference = firebaseStorage
-        .ref()
-        .child('travel/$user')
-        .child('20200112_154731.jpg');
-    String imageUrl = await storageReference.getDownloadURL();
-
-    return imageUrl;
   }
 
   Stream<QuerySnapshot> fetchEnrollmentDtosAsStream() {

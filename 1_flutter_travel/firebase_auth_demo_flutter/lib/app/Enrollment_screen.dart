@@ -229,14 +229,13 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                         convertObjListToImageUploadModelList, user);
                     // debugPrint(imgUpload.toString());
                     await enrollmentProvider.addEnrollmentDto(EnrollmentDto(
-                      uId: user.uid,
-                      name: name,
-                      sex: selectedRadio,
-                      introduce: introduce,
-                      img: imgUpload[0],
-                      // img2: imgUpload[1],
-                      // img3: imgUpload[2]
-                    ));
+                        uId: user.uid,
+                        name: name,
+                        sex: selectedRadio,
+                        introduce: introduce,
+                        img: imgUpload[0],
+                        img2: imgUpload[1],
+                        img3: imgUpload[2]));
 
                     Navigator.pop(context);
                   }
@@ -306,10 +305,11 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
   Future<void> uploadFile(
       List<ImageUploadModel> convertObjListToImageUploadModelList,
       User user) async {
+    FirebaseStorage firebaseStorage = FirebaseStorage.instance;
     // imgUModel.forEach((f) async {  // forEach랑 for문이랑 await 처리가 다르다.
     for (ImageUploadModel imageUploadModel
         in convertObjListToImageUploadModelList) {
-      StorageReference storageReference = FirebaseStorage.instance.ref().child(
+      StorageReference storageReference = firebaseStorage.ref().child(
           'travel/${user.uid}/${Path.basename(imageUploadModel.imageFile.path)}');
       //upload the file to Firebase Storage
       final StorageUploadTask uploadTask =
@@ -318,11 +318,9 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
       // StorageTaskSnapshot taskSnapshot =
       StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
 
-      // String downloadUrl =
-      await taskSnapshot.ref.getDownloadURL().then((dynamic data) {
-        imgUpload[imageUploadModel.index] = data;
-        debugPrint('Enroll' + data.toString());
-      });
+      String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      imgUpload[imageUploadModel.index] = downloadUrl;
+      debugPrint('Enroll' + downloadUrl);
       // setImgUpload(downloadUrl);
       print('File Uploaded');
     }
