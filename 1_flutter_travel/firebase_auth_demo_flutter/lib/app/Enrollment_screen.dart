@@ -218,16 +218,13 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                     _formKey.currentState.save(); // set value
                     List.generate(images.length, (index) {
                       if (images[index] is ImageUploadModel) {
-                        // images2[index] = images[index];
                         convertObjListToImageUploadModelList.add(images[index]);
-                        // imgUModel.index = index;
                       }
                     });
-                    // List<ImageUploadModel> imgUModel = images;
-                    // imgUModel.index = 0;
+
                     await uploadFile(
                         convertObjListToImageUploadModelList, user);
-                    // debugPrint(imgUpload.toString());
+
                     await enrollmentProvider.addEnrollmentDto(EnrollmentDto(
                         uId: user.uid,
                         name: name,
