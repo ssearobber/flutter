@@ -41,6 +41,8 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
   Future<File> _imageFile;
   List<String> imgUpload = ['noen', 'noen', 'noen'];
 
+  bool isLoading = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -62,6 +64,12 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
   void setSelectedRadio(String val) {
     setState(() {
       selectedRadio = val;
+    });
+  }
+
+  void setIsLoading(bool val) {
+    setState(() {
+      isLoading = val;
     });
   }
 
@@ -110,6 +118,14 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
         images.replaceRange(index, index + 1, [imageUpload]);
       });
     });
+  }
+
+  Widget _buildHeader() {
+    if (isLoading) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
   }
 
   @override
@@ -214,6 +230,9 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
               RaisedButton(
                 splashColor: Colors.indigo,
                 onPressed: () async {
+                  setIsLoading(true);
+                  // isLoading = true;
+
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save(); // set value
                     List.generate(images.length, (index) {
@@ -234,6 +253,8 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                         img2: imgUpload[1],
                         img3: imgUpload[2]));
 
+                    isLoading = false;
+
                     Navigator.pop(context);
                   }
                 },
@@ -241,7 +262,11 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
                     style: TextStyle(color: Colors.white)),
                 color: Colors.indigo,
                 // otherwise.
-              )
+              ),
+              SizedBox(
+                height: 100.0,
+                child: _buildHeader(),
+              ),
             ],
           ),
         ),

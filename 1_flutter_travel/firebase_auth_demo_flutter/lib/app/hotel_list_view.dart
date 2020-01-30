@@ -60,12 +60,7 @@ class HotelListView extends StatelessWidget {
                                 child: Image.network(
                                   enrollmentDto.img,
                                   fit: BoxFit.cover,
-                                )
-                                // Image.asset(
-                                //   enrollmentDto.sex,
-                                //   fit: BoxFit.cover,
-                                // ),
-                                ),
+                                )),
                             Container(
                               color: HotelAppTheme.buildLightTheme()
                                   .backgroundColor,
