@@ -87,7 +87,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           return Scaffold(
               appBar: AppBar(
                 // title: Text(Strings.homePage),
-                backgroundColor: Colors.grey[200],
+                // backgroundColor: Colors.grey[200],
+                backgroundColor: Colors.white,
                 elevation: 0.0,
                 actions: <Widget>[
                   FlatButton(
@@ -109,7 +110,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 // ),
                 iconTheme: IconThemeData(color: Colors.indigo),
               ),
-              backgroundColor: Colors.grey[200],
+              // backgroundColor: Colors.grey[200],
+              backgroundColor: Colors.white,
               drawer: isLoading ? null : DeveloperMenu(),
               body: ListView.builder(
                 itemCount: enrollmentDtos.length,

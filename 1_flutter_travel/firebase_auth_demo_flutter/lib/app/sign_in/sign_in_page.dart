@@ -107,7 +107,8 @@ class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[200],
+        // backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.white,
         elevation: 0.0,
         title: Text(
           title,
@@ -121,7 +122,8 @@ class SignInPage extends StatelessWidget {
       // Hide developer menu while loading in progress.
       // This is so that it's not possible to switch auth service while a request is in progress
       // drawer: isLoading ? null : DeveloperMenu(),
-      backgroundColor: Colors.grey[200],
+      // backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.white,
       body: _buildSignIn(context),
     );
   }

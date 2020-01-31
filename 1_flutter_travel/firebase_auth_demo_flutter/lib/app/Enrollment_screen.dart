@@ -135,7 +135,8 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
     return Scaffold(
       appBar: AppBar(
         // title: Text(Strings.homePage),
-        backgroundColor: Colors.grey[200],
+        // backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.white,
         elevation: 0.0,
         actions: <Widget>[
           FlatButton(
@@ -157,7 +158,8 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
         // ),
         iconTheme: IconThemeData(color: Colors.indigo),
       ),
-      backgroundColor: Colors.grey[200],
+      // backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Form(
