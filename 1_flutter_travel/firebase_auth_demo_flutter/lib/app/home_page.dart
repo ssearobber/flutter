@@ -110,7 +110,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 // ),
                 iconTheme: IconThemeData(color: Colors.indigo),
               ),
-              // backgroundColor: Colors.grey[200],
               backgroundColor: Colors.white,
               drawer: isLoading ? null : DeveloperMenu(),
               body: ListView.builder(
