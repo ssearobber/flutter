@@ -14,7 +14,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="firebase_auth_demo_flutter"
+        android:label="TStory"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
