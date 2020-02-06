@@ -134,12 +134,14 @@ class SignInPage extends StatelessWidget {
         child: CircularProgressIndicator(),
       );
     }
-    //this is signIn of text
-    // return Text(
-    //   Strings.signIn,
-    //   textAlign: TextAlign.center,
-    //   style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w600),
-    // );
+    // this is signIn of text
+    return
+        // Image.asset('assets/TPlace.png');
+        Text(
+      "TPlace",
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w600),
+    );
   }
 
   Widget _buildSignIn(BuildContext context) {
