@@ -26,11 +26,11 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 //속성 파일로부터 keystore 정보를 가져올 수 있도록 설정 (추가)
-// def keystoreProperties = new Properties()
-// def keystorePropertiesFile = rootProject.file('key.properties')
-// if (keystorePropertiesFile.exists()) {
-//     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-// }
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
 
 android {
     compileSdkVersion 28
@@ -54,31 +54,31 @@ android {
         multiDexEnabled true
     }
     //key.properties 파일의 필드를 불러와서 사용하게 됨 (추가)
-    // signingConfigs {
-    //    release {
-    //        keyAlias keystoreProperties['keyAlias']
-    //        keyPassword keystoreProperties['keyPassword']
-    //        storeFile file(keystoreProperties['storeFile'])
-    //        storePassword keystoreProperties['storePassword']
-    //    }
-    // }
+    signingConfigs {
+       release {
+           keyAlias keystoreProperties['keyAlias']
+           keyPassword keystoreProperties['keyPassword']
+           storeFile file(keystoreProperties['storeFile'])
+           storePassword keystoreProperties['storePassword']
+       }
+    }
 
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             // 디버그일 때 사용
-            signingConfig signingConfigs.debug
+            // signingConfig signingConfigs.debug
+            // multiDexKeepProguard file('multidex-config.pro')
 
             // 릴리즈일 때 사용 (변경)
-            // signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
 
             //Proguard 규칙 파일을 추가 (추가)
-            // minifyEnabled true
-            // useProguard true
+            minifyEnabled true
+            useProguard true
 
-            multiDexKeepProguard file('multidex-config.pro')
-            // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
