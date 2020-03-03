@@ -39,7 +39,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
   List<ImageUploadModel> convertObjListToImageUploadModelList =
       List<ImageUploadModel>();
   Future<File> _imageFile;
-  List<String> imgUpload = ['noen', 'noen', 'noen'];
+  List<String> imgUpload = ['none', 'none', 'none'];
 
   bool isLoading = false;
 
