@@ -1,10 +1,9 @@
 import 'package:firebase_auth_demo_flutter/app/hotel_app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-import 'package:firebase_auth_demo_flutter/model/hotel_list_data.dart';
 import 'package:firebase_auth_demo_flutter/model/EnrollmentDto.dart';
+import 'package:firebase_auth_demo_flutter/app/Enrollment_screen.dart';
 
 class HotelListView extends StatelessWidget {
   const HotelListView(
@@ -35,9 +34,14 @@ class HotelListView extends StatelessWidget {
                   left: 24, right: 24, top: 8, bottom: 16),
               child: InkWell(
                 splashColor: Colors.transparent,
-                onTap: () {
-                  callback();
-                },
+                onTap:
+                    // 리스트 클릭 시 이벤트 담당하는 곳?
+                    // callback();
+                    () => Navigator.push(
+                        context,
+                        MaterialPageRoute<EnrollmentScreen>(
+                            builder: (BuildContext context) =>
+                                EnrollmentScreen())),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(16.0)),
@@ -87,42 +91,6 @@ class HotelListView extends StatelessWidget {
                                                 fontSize: 22,
                                               ),
                                             ),
-                                            // Row(
-                                            //   crossAxisAlignment:
-                                            //       CrossAxisAlignment.center,
-                                            //   mainAxisAlignment:
-                                            //       MainAxisAlignment.start,
-                                            //   children: <Widget>[
-                                            //     Text(
-                                            //       hotelData.subTxt,
-                                            //       style: TextStyle(
-                                            //           fontSize: 14,
-                                            //           color: Colors.grey
-                                            //               .withOpacity(0.8)),
-                                            //     ),
-                                            //     const SizedBox(
-                                            //       width: 4,
-                                            //     ),
-                                            //     Icon(
-                                            //       FontAwesomeIcons.mapMarkerAlt,
-                                            //       size: 12,
-                                            //       color: HotelAppTheme
-                                            //               .buildLightTheme()
-                                            //           .primaryColor,
-                                            //     ),
-                                            //     Expanded(
-                                            //       child: Text(
-                                            //         '${hotelData.dist.toStringAsFixed(1)} km to city',
-                                            //         overflow:
-                                            //             TextOverflow.ellipsis,
-                                            //         style: TextStyle(
-                                            //             fontSize: 14,
-                                            //             color: Colors.grey
-                                            //                 .withOpacity(0.8)),
-                                            //       ),
-                                            //     ),
-                                            //   ],
-                                            // ),
                                             Padding(
                                               padding:
                                                   const EdgeInsets.only(top: 4),
@@ -140,13 +108,6 @@ class HotelListView extends StatelessWidget {
                                                             .buildLightTheme()
                                                         .primaryColor,
                                                   ),
-                                                  // Text(
-                                                  //   ' ${hotelData.reviews} Reviews',
-                                                  //   style: TextStyle(
-                                                  //       fontSize: 14,
-                                                  //       color: Colors.grey
-                                                  //           .withOpacity(0.8)),
-                                                  // ),
                                                 ],
                                               ),
                                             ),
@@ -155,33 +116,6 @@ class HotelListView extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(
-                                  //       right: 16, top: 8),
-                                  //   child: Column(
-                                  //     mainAxisAlignment:
-                                  //         MainAxisAlignment.center,
-                                  //     crossAxisAlignment:
-                                  //         CrossAxisAlignment.end,
-                                  //     children: <Widget>[
-                                  //       Text(
-                                  //         '\$${hotelData.perNight}',
-                                  //         textAlign: TextAlign.left,
-                                  //         style: TextStyle(
-                                  //           fontWeight: FontWeight.w600,
-                                  //           fontSize: 22,
-                                  //         ),
-                                  //       ),
-                                  //       Text(
-                                  //         '/per night',
-                                  //         style: TextStyle(
-                                  //             fontSize: 14,
-                                  //             color:
-                                  //                 Colors.grey.withOpacity(0.8)),
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  // ),
                                 ],
                               ),
                             ),

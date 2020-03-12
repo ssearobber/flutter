@@ -68,11 +68,11 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             // 디버그일 때 사용
-            // signingConfig signingConfigs.debug
+            signingConfig signingConfigs.debug
             // multiDexKeepProguard file('multidex-config.pro')
 
             // 릴리즈일 때 사용 (변경)
-            signingConfig signingConfigs.release
+            // signingConfig signingConfigs.release
 
             //Proguard 규칙 파일을 추가 (추가)
             minifyEnabled true
